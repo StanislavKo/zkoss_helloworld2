@@ -1,0 +1,127 @@
+<?init class="com.hsd.zkoss.contact.ui.workflow.WorkflowService"?>
+
+<zk>
+	<style src="/css/style.css" />
+	<div class="bodyOuterDiv">
+		<div class="bodyDiv">
+			<div apply="org.zkoss.bind.BindComposer"
+				onCreate="@command('onCreate')"
+				viewModel="@id('vm') @init('com.hsd.zkoss.contact.ui.model.ContactViewModel')"
+				validationMessages="@id('vmsgs')"
+				form="@id('fx') @load(vm.contact) @save(vm.contact, before='save') @validator('com.hsd.zkoss.contact.ui.validator.ContactValidator')">
+				<grid width="760px">
+					<columns>
+						<column width="150px" align="right" />
+						<column width="600px" align="left" />
+					</columns>
+					<rows>
+						<row>
+							<cell colspan="2">
+								<vlayout>
+									<button id="newContactButton"
+										label="${labels['contact_new']}" onClick="@command('newContact')" />
+									<hlayout>
+										<textbox
+											value="@bind(vm.findContactText)" width="150px" tabindex="1" />
+										<button id="findContactButton"
+											label="${labels['contact_find']}" onClick="@command('findContact')" />
+									</hlayout>
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							<label value="${labels['contact_firstName']}" />
+							<hlayout>
+								<textbox id="firstName" value="@bind(fx.firstName)"
+									width="150px" tabindex="1" />
+								<label class="error"
+									value="@load(vmsgs['firstName'])" />
+							</hlayout>
+						</row>
+						<row>
+							<label value="${labels['contact_lastName']}" />
+							<hlayout>
+								<textbox id="lastName" value="@bind(fx.lastName)"
+									width="150px" tabindex="2" />
+								<label class="error"
+									value="@load(vmsgs['lastName'])" />
+							</hlayout>
+						</row>
+						<row>
+							<label value="${labels['contact_middleName']}" />
+							<hlayout>
+								<textbox id="middleName" value="@bind(fx.middleName)"
+									width="150px" tabindex="2" />
+							</hlayout>
+						</row>
+						<row valign="top">
+							<label value="${labels['contact_phone']}" />
+							<hlayout>
+								<vlayout>
+									<textbox id="phone" value="@bind(fx.phone)"
+										width="150px" tabindex="2" />
+									<label value="${labels['contact_phone_digits_only']}" />
+								</vlayout>
+								<label class="error"
+									value="@load(vmsgs['phone'])" />
+							</hlayout>
+						</row>
+						<row>
+							<cell colspan="2"
+								style="text-align:center">
+								<vlayout>
+									<label visible="@load(empty vmsgs)"
+										value="@load(empty vmsgs ? labels['contact_submitted'] : '', before='save')" />
+									<button label="${labels['contact_save']}"
+										onClick="@command('save')" height="30px" />
+								</vlayout>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+				<html><![CDATA[<br/><br/><br/>]]></html>
+
+				<grid id="addressesGrid" width="760px">
+					<columns>
+						<column label="${labels['address_postalCode']}" width="150px"
+							align="right" />
+						<column label="${labels['address_city']}" width="100px"
+							align="right" />
+						<column label="${labels['address_street']}" width="100px"
+							align="right" />
+						<column label="${labels['address_building']}" width="100px"
+							align="right" />
+						<column label="${labels['address_apartment']}" width="100px"
+							align="right" />
+						<column width="200px" align="right" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label value="${each.postalCode}" />
+								<label value="${each.city}" />
+								<label value="${each.street}" />
+								<label value="${each.building}" />
+								<label value="${each.apartment}" />
+								<hlayout>
+									<button id="gridrowedit_${each.uuid}"
+										label="${labels['address_edit']}" onClick="@command('editAddress', target=self)"
+										height="30px" />
+									<button id="gridrowdelete_${each.uuid}"
+										label="${labels['address_delete']}" onClick="@command('deleteAddress', target=self)"
+										height="30px" />
+								</hlayout>
+							</row>
+						</template>
+					</rows>
+				</grid>
+				<div width="760px" align="right">
+					<button label="${labels['address_add']}"
+						onClick="@command('addAddress')" height="30px" />
+				</div>
+
+			</div>
+		</div>
+	</div>
+</zk>

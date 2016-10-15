@@ -1,0 +1,1 @@
+jboss-cli.sh --file=jboss-cli_database.txt

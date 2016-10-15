@@ -1,0 +1,12 @@
+.bodyOuterDiv {
+	text-align: center;
+}
+
+.bodyDiv {
+	display: inline-block;
+}
+
+.error {
+	color: red; 
+}
+

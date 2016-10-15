@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Stanislav (generated)" id="1476552673368-1">
+        <createTable tableName="address">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apartment" type="VARCHAR(255)"/>
+            <column name="building" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="postal_code" type="VARCHAR(255)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="contact_uuid" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Stanislav (generated)" id="1476552673368-2">
+        <createTable tableName="contact">
+            <column name="uuid" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="middle_name" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Stanislav (generated)" id="1476552673368-3">
+        <addPrimaryKey columnNames="uuid" constraintName="PRIMARY" tableName="address"/>
+    </changeSet>
+    <changeSet author="Stanislav (generated)" id="1476552673368-4">
+        <addPrimaryKey columnNames="uuid" constraintName="PRIMARY" tableName="contact"/>
+    </changeSet>
+    <changeSet author="Stanislav (generated)" id="1476552673368-5">
+        <createIndex indexName="FK91owsyfahkcw4eq7tdrnooqt1" tableName="address">
+            <column name="contact_uuid"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Stanislav (generated)" id="1476552673368-6">
+        <addForeignKeyConstraint baseColumnNames="contact_uuid" baseTableName="address" constraintName="FK91owsyfahkcw4eq7tdrnooqt1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="uuid" referencedTableName="contact"/>
+    </changeSet>
+</databaseChangeLog>

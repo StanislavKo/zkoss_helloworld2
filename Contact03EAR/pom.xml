@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>zkoss-helloworld2</groupId>
+		<artifactId>Contact03</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>Contact03EAR</artifactId>
+	<packaging>ear</packaging>
+	
+	<dependencies>
+		<!-- <dependency>
+			<groupId>zkoss-helloworld2</groupId>
+			<artifactId>Contact03EJB</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>ejb</type>
+		</dependency> -->
+		<dependency>
+			<groupId>zkoss-helloworld2</groupId>
+			<artifactId>Contact03War</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.10.1</version>
+				<configuration>
+					<modules>
+						<!-- <ejbModule>
+							<groupId>zkoss-helloworld2</groupId>
+							<artifactId>Contact03EJB</artifactId>
+							<bundleFileName>ejb.jar</bundleFileName>
+						</ejbModule> -->
+						<webModule>
+							<groupId>zkoss-helloworld2</groupId>
+							<artifactId>Contact03War</artifactId>
+							<bundleFileName>web.war</bundleFileName>
+							<contextRoot>/Contact</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,73 @@
+<?init class="com.hsd.zkoss.contact.ui.workflow.WorkflowService"?>
+
+<zk>
+	<style src="/css/style.css" />
+	<div class="bodyOuterDiv">
+		<div class="bodyDiv">
+			<div apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.hsd.zkoss.contact.ui.model.AddressViewModel')"
+				validationMessages="@id('vmsgs')"
+				form="@id('fx') @load(vm.address) @save(vm.address, before='save') @validator('com.hsd.zkoss.contact.ui.validator.AddressValidator')">
+				<grid width="760px">
+					<columns>
+						<column width="150px" align="right" />
+						<column width="600px" align="left" />
+					</columns>
+					<rows>
+						<row>
+							<label value="${labels['address_postalCode']}"/>
+							<hlayout>
+								<textbox value="@bind(fx.postalCode)"
+									width="150px" tabindex="1" />
+								<label class="error"
+									value="@load(vmsgs['postalCode'])" />
+							</hlayout>
+						</row>
+						<row>
+							<label value="${labels['address_city']}" />
+							<hlayout>
+								<textbox value="@bind(fx.city)"
+									width="150px" tabindex="2" />
+								<label class="error"
+									value="@load(vmsgs['city'])" />
+							</hlayout>
+						</row>
+						<row>
+							<label value="${labels['address_street']}" />
+							<hlayout>
+								<textbox value="@bind(fx.street)"
+									width="150px" tabindex="2" />
+								<label class="error"
+									value="@load(vmsgs['street'])" />
+							</hlayout>
+						</row>
+						<row>
+							<label value="${labels['address_building']}" />
+							<hlayout>
+								<textbox value="@bind(fx.building)"
+									width="150px" tabindex="2" />
+								<label class="error"
+									value="@load(vmsgs['building'])" />
+							</hlayout>
+						</row>
+						<row>
+							<label value="${labels['address_apartment']}" />
+							<hlayout>
+								<textbox value="@bind(fx.apartment)"
+									width="150px" tabindex="2" />
+							</hlayout>
+						</row>
+						<row>
+							<cell colspan="2">
+								<button label="${labels['address_cancel']}"
+									onClick="@command('cancel')" width="100px" height="30px" />
+								<button label="${labels['address_save']}"
+									onClick="@command('save')" width="100px" height="30px" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</div>
+		</div>
+	</div>
+</zk>
