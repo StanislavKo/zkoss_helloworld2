@@ -8,6 +8,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
@@ -27,16 +28,16 @@ public class ContactEjb {
 
 	private static Logger logger = Logger.getLogger(ContactEjb.class);
 
-	@PersistenceUnit(unitName = "ZKOSS_HELLOWORLD_02")
-	private EntityManagerFactory emf;
+//	@PersistenceUnit(unitName = "ZKOSS_HELLOWORLD_02")
+//	private EntityManager em;
 
-	@TransactionAttribute(TransactionAttributeType.NEVER)
+	@PersistenceContext(unitName = "ZKOSS_HELLOWORLD_02")
+	private EntityManager em;
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void saveContact(ContactPojo contactPojo, List<AddressPojo> addressesPojo) {
 		logger.info("saveContact() [contact.uuid:" + (contactPojo == null ? "ISNULL" : contactPojo.getUuid()) + "] [addressesPojo.size:"
 				+ (addressesPojo == null ? "ISNULL" : addressesPojo.size()) + "]");
-		
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
 
 		PUContact contact = em.find(PUContact.class, contactPojo.getUuid());
 		if (contact != null) {
@@ -55,7 +56,7 @@ public class ContactEjb {
 			contact.setPhone(contactPojo.getPhone());
 			em.persist(contact);
 		}
-		
+
 		Query query = em.createNamedQuery("Address.deleteByContact");
 		query.setParameter("contact", contact);
 		try {
@@ -85,17 +86,14 @@ public class ContactEjb {
 				em.persist(address);
 			}
 		}
-		em.getTransaction().commit();
+		em.flush();
 	}
-	
-	@TransactionAttribute(TransactionAttributeType.NEVER)
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public ContactAddressesPojo findContact(String lastName) {
 		logger.info("findContact() [lastName:" + lastName + "]");
-		
+
 		ContactAddressesPojo contactAddressesPojo = new ContactAddressesPojo();
-		
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
 
 		TypedQuery<PUContact> queryDevice = em.createNamedQuery("Contact.findByLastName", PUContact.class);
 		queryDevice.setParameter("lastName", lastName);
@@ -111,9 +109,7 @@ public class ContactEjb {
 			em.getTransaction().rollback();
 			return null;
 		}
-		
-		em.getTransaction().commit();
-		
+
 		return contactAddressesPojo;
 	}
 
